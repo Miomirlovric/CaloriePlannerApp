@@ -17,15 +17,186 @@ namespace CaloriePlannerApp.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.1");
 
+            modelBuilder.Entity("CaloriePlannerApp.Data.Entities.FoodItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Calories")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(0)
+                        .HasColumnName("Calories");
+
+                    b.Property<decimal>("Carbohydrate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue(0m)
+                        .HasColumnName("Carbohydrate");
+
+                    b.Property<decimal>("Fat")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue(0m)
+                        .HasColumnName("Fat");
+
+                    b.Property<decimal>("Fiber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue(0m)
+                        .HasColumnName("Fiber");
+
+                    b.Property<string>("FoodGroup")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("FoodGroup");
+
+                    b.Property<bool>("IsCustomFood")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsCustomFood");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Name");
+
+                    b.Property<decimal>("Protein")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue(0m)
+                        .HasColumnName("Protein");
+
+                    b.Property<decimal>("Sugars")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue(0m)
+                        .HasColumnName("Sugars");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Foods");
+                });
+
+            modelBuilder.Entity("CaloriePlannerApp.Data.Entities.FoodUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("At")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("At");
+
+                    b.Property<Guid>("FoodId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("FoodId");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("Quantity");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FoodUser");
+                });
+
             modelBuilder.Entity("CaloriePlannerApp.Data.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("ActivityLevelEnum")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ActivityLevelEnum");
+
+                    b.Property<DateTime>("Birth")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Birth");
+
+                    b.Property<int>("CalorieGoal")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("CalorieGoal");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("FirstName");
+
+                    b.Property<decimal>("Height")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Height");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("LastName");
+
+                    b.Property<int>("ProgressTypeEnum")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ProgressTypeEnum");
+
+                    b.Property<decimal>("Weight")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Weight");
+
+                    b.Property<int>("WeightGoalEnum")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("WeightGoalEnum");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("CaloriePlannerApp.Data.Entities.FoodItem", b =>
+                {
+                    b.HasOne("CaloriePlannerApp.Data.Entities.User", "CreatedBy")
+                        .WithMany("CustomFoods")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("CaloriePlannerApp.Data.Entities.FoodUser", b =>
+                {
+                    b.HasOne("CaloriePlannerApp.Data.Entities.FoodItem", "Food")
+                        .WithMany()
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CaloriePlannerApp.Data.Entities.User", "User")
+                        .WithMany("ConsumedFoods")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Food");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CaloriePlannerApp.Data.Entities.User", b =>
+                {
+                    b.Navigation("ConsumedFoods");
+
+                    b.Navigation("CustomFoods");
                 });
 #pragma warning restore 612, 618
         }

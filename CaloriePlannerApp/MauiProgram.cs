@@ -1,6 +1,12 @@
 ﻿using CaloriePlannerApp.Data;
+using CaloriePlannerApp.Data.Helper;
+using CaloriePlannerApp.Data.Model;
+using CommunityToolkit.Maui;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
+using OfficeOpenXml;
+using System.Diagnostics;
 
 namespace CaloriePlannerApp;
 
@@ -8,10 +14,13 @@ public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
 	{
-		var builder = MauiApp.CreateBuilder();
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+        var builder = MauiApp.CreateBuilder();
 		builder
-			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
+            .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
+            .ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
@@ -32,6 +41,16 @@ public static class MauiProgram
             if (context != null)
             {
                 context.Database.Migrate();
+                var shouldSeed = !context.Foods.Any(x => x.IsCustomFood == false);
+                
+                string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data/Seed/food.xlsx");
+
+                if (File.Exists(filePath) && shouldSeed)
+                {
+                    var foodSeed = ExcelHelper.ReadFoodData(filePath);
+                    context.Foods.AddRange(foodSeed);
+                    context.SaveChanges();
+                }
             }
         }
 
