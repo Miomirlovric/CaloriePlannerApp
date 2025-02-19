@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CaloriePlannerApp.UserEditPopup"
+             xmlns:ct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Color="Gray"
+             HorizontalOptions="Fill"
+             VerticalOptions="Fill">
+
+
+    <Grid Padding="20" HorizontalOptions="Fill" BackgroundColor="White"
+VerticalOptions="Fill">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Birth Date Picker -->
+        <VerticalStackLayout Grid.Row="0">
+            <Label Text="Birth Date" VerticalOptions="Center" HorizontalOptions="Start" />
+            <DatePicker Date="{Binding Birth}"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1">
+            <Label Text="First Name" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <Entry Text="{Binding FirstName}" />
+        </VerticalStackLayout>
+        <!-- First Name Entry -->
+
+        <VerticalStackLayout Grid.Row="2">
+            <Label Text="Last Name" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <Entry Text="{Binding LastName}" />
+        </VerticalStackLayout>
+        <!-- Last Name Entry -->
+
+        <VerticalStackLayout Grid.Row="3">
+            <Label Text="Height (cm)" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <Entry Text="{Binding Height}" Keyboard="Numeric" />
+        </VerticalStackLayout>
+        <!-- Height Entry -->
+
+        <VerticalStackLayout Grid.Row="4">
+            <Label Text="Weight (kg)" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <Entry Text="{Binding Weight}" Keyboard="Numeric" />
+        </VerticalStackLayout>
+        <!-- Weight Entry -->
+
+        <VerticalStackLayout Grid.Row="5">
+            <Label Text="Activity Level" VerticalOptions="Center" HorizontalOptions="Start" />
+            <Picker ItemsSource="{Binding ActivityLevels}"
+                    SelectedItem="{Binding ActivityLevelString}"
+                    />
+        </VerticalStackLayout>
+        <!-- Activity Level Picker -->
+
+        <VerticalStackLayout Grid.Row="6">
+            <Label Text="Progress Type" VerticalOptions="Center" HorizontalOptions="Start" />
+            <Picker ItemsSource="{Binding ProgressTypes}"
+                    SelectedItem="{Binding ProgressTypeString}"/>
+        </VerticalStackLayout>
+        <!-- Progress Type Picker -->
+
+        <VerticalStackLayout  Grid.Row="7">
+            <Label Text="Weight Goal" VerticalOptions="Center" HorizontalOptions="Start"/>
+            <Picker ItemsSource="{Binding WeightGoals}"
+                    SelectedItem="{Binding WeightGoalString}"/>
+        </VerticalStackLayout>
+        <!-- Weight Goal Picker -->
+
+        <!-- Save Button -->
+        <HorizontalStackLayout Grid.Row="8">
+            <Label Text="Estimated calorie goal: "></Label>
+            <Label Text="{Binding CalorieGoal}"></Label>
+        </HorizontalStackLayout>
+        <!-- Save Button -->
+        <Label Grid.Row="9" LineBreakMode="WordWrap" Text="{Binding Message}" ></Label>
+        <HorizontalStackLayout Grid.Row="10">
+            <Button Text="Save" Command="{Binding SaveCommand}"/>
+            <Button Text="Cancel" Command="{Binding CloseCommand}"/>
+        </HorizontalStackLayout>
+    </Grid>
+</ct:Popup>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CaloriePlannerApp.FoodInputs"
+             BackgroundColor="Gray"
+             x:Name="IputsEdit"
+             Title="FoodInputs">
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="20">
+
+
+        <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center" Grid.Row="0">
+
+            <Button 
+                Text="&lt;" 
+                Command="{Binding PreviosDayCommand}"
+                VerticalOptions="Center"
+                Grid.Column="0" />
+
+            <VerticalStackLayout Grid.Column="1" >
+                <DatePicker 
+                Date="{Binding Date, Mode=TwoWay}" 
+                HorizontalOptions="CenterAndExpand"
+                />
+                <Button HorizontalOptions="Center" Command="{Binding NewCommand}" Text="New entry"></Button>
+            </VerticalStackLayout>
+
+
+            <Button 
+                Text="&gt;" 
+                Command="{Binding NextDayCommand}" 
+                VerticalOptions="Center"
+                Grid.Column="2" />
+        </Grid>
+
+        <Border Padding="10" Grid.Row="1">
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Summary for the Day:" 
+                       FontAttributes="Bold" 
+                       FontSize="Small" 
+                       TextColor="Black" />
+
+                <Label Text="{Binding CaloriesSum, StringFormat='Calories: {0}'}" 
+                       TextColor="Black" />
+                <Label Text="{Binding FatSum, StringFormat='Fat: {0:F1} g'}" 
+                       TextColor="Black" />
+                <Label Text="{Binding ProteinSum, StringFormat='Protein: {0:F1} g'}" 
+                       TextColor="Black" />
+                <Label Text="{Binding CarbohydrateSum, StringFormat='Carbohydrates: {0:F1} g'}" 
+                       TextColor="Black" />
+                <Label Text="{Binding SugarsSum, StringFormat='Sugars: {0:F1} g'}" 
+                       TextColor="Black" />
+                <Label Text="{Binding FiberSum, StringFormat='Fiber: {0:F1} g'}" 
+                       TextColor="Black" />
+            </VerticalStackLayout>
+        </Border>
+
+        <CollectionView ItemsSource="{Binding Foods}" Grid.Row="2" 
+                HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="5" Padding="10">
+                        <VerticalStackLayout Spacing="10">
+
+                            <VerticalStackLayout Spacing="10">
+                                <Label Text="{Binding Name}" LineBreakMode="WordWrap"
+                               FontAttributes="Bold" 
+                               FontSize="Small" 
+                               TextColor="Black" />
+                                <Label Text="{Binding FoodGroup}" LineBreakMode="WordWrap"
+                               FontSize="Small" 
+                               TextColor="Black" 
+                               VerticalOptions="Center" />
+                            </VerticalStackLayout>
+
+                            <Grid ColumnDefinitions="*,*"
+                                RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Text="Calories:" TextColor="Black" Grid.Column="0" Grid.Row="0" />
+                                <Label Text="{Binding Calories}" TextColor="Black" Grid.Column="1" Grid.Row="0" />
+
+                                <Label Text="Fat:" TextColor="Black" Grid.Column="0" Grid.Row="1" />
+                                <Label Text="{Binding Fat}" TextColor="Black" Grid.Column="1" Grid.Row="1" />
+
+                                <Label Text="Protein:" TextColor="Black" Grid.Column="0" Grid.Row="2" />
+                                <Label Text="{Binding Protein}" TextColor="Black" Grid.Column="1" Grid.Row="2" />
+
+                                <Label Text="Carbs:" TextColor="Black" Grid.Column="0" Grid.Row="3" />
+                                <Label Text="{Binding Carbohydrate}" TextColor="Black" Grid.Column="1" Grid.Row="3" />
+
+                                <Label Text="Sugars:" TextColor="Black" Grid.Column="0" Grid.Row="4" />
+                                <Label Text="{Binding Sugars}" TextColor="Black" Grid.Column="1" Grid.Row="4" />
+
+                                <Label Text="Fiber:" TextColor="Black" Grid.Column="0" Grid.Row="5" />
+                                <Label Text="{Binding Fiber}" TextColor="Black" Grid.Column="1" Grid.Row="5" />
+                            </Grid>
+
+
+                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                <Label Text="Quantity (g):" 
+                               VerticalOptions="Center" 
+                               TextColor="Black" />
+                                <Entry Text="{Binding Quantity, Mode=TwoWay}" 
+                               Keyboard="Numeric" 
+                               WidthRequest="60"/>
+                                <Button Text="Delete entry" Command="{Binding BindingContext.DeleteCommand, Source={x:Reference Name=IputsEdit}}" CommandParameter="{Binding .}"></Button>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="3" Text="Save" Command="{Binding SaveCommand}">
+        </Button>
+
+    </Grid>
+</ContentPage>

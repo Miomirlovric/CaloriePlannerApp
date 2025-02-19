@@ -5,11 +5,47 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:CaloriePlannerApp"
     Shell.FlyoutBehavior="Flyout"
-    Title="CaloriePlannerApp">
+    Title="CaloriePlannerApp"
+    FlyoutBackgroundColor="LightGray">
 
-    <ShellContent
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid ColumnDefinitions="50,*" Padding="10">
+                <Image Source="{Binding Icon}" MaximumHeightRequest="20" MaximumWidthRequest="20"/>
+                <Label Grid.Column="1" Text="{Binding Title}" TextColor="Black" FontAttributes="Bold"></Label>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    <FlyoutItem Title="{Binding UserName}" Icon="user.png">
+        <ShellContent
+        Title="{Binding UserName}"
+        ContentTemplate="{DataTemplate local:UserSelection}"
+        Route="UserSelection" />
+    </FlyoutItem>
+    <FlyoutItem Title="Home" Icon="home.png">
+        <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+    </FlyoutItem>
+    <FlyoutItem Title="Daily Inputs" Icon="calendar.png" IsVisible="{Binding CanSeeAll}">
+        <ShellContent
+        Title="Daily Inputs"
+        ContentTemplate="{DataTemplate local:FoodInputs}"
+        Route="FoodInputs" />
+    </FlyoutItem>
+    <FlyoutItem Title="Weekly summary" Icon="calendar.png" IsVisible="{Binding CanSeeAll}">
+        <ShellContent
+        Title="Weekly summary"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+    </FlyoutItem>
+    <FlyoutItem Title="Custom foods" Icon="restaurant.png" IsVisible="{Binding CanSeeAll}">
+        <ShellContent
+        Title="Custom foods"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+    </FlyoutItem>
 
 </Shell>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:CaloriePlannerApp.Data.ViewModels"
+             x:Class="CaloriePlannerApp.UserSelection"
+             x:Name="UserSelectionPage"
+             Title="User Selection">
+
+    <!-- Use Grid instead of VerticalStackLayout -->
+    <Grid Padding="20">
+        <!-- Define rows and columns for the grid layout -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Row for the Title -->
+            <RowDefinition Height="*" />
+            <!-- Row for the CollectionView -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row for the Create New User Button -->
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Title Label -->
+        <Label 
+            Text="Select a User"
+            TextColor="Black"
+            FontSize="24"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            Grid.Row="0" />
+
+        <!-- CollectionView for User List -->
+        <CollectionView ItemsSource="{Binding Users}" Grid.Row="1">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- User Name Label -->
+                        <Label Text="{Binding Name}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Start"
+                               Grid.Row="0" 
+                               TextColor="Black"
+                               FontSize="18" />
+
+                        <!-- Action Buttons (Select & Delete) -->
+                        <StackLayout Orientation="Horizontal" Spacing="10" HorizontalOptions="Start" VerticalOptions="Start" Grid.Row="1">
+                            <Button  Padding="0" Text="Select" Command="{Binding BindingContext.SelectUserCommand, Source={x:Reference Name=UserSelectionPage}}" CommandParameter="{Binding .}" />
+                            <Button Padding="0" Text="Edit" Command="{Binding BindingContext.EditUserCommand, Source={x:Reference Name=UserSelectionPage}}" CommandParameter="{Binding .}" />
+                            <Button Padding="0" Text="Delete" Command="{Binding BindingContext.DeleteUserCommand, Source={x:Reference Name=UserSelectionPage}}" CommandParameter="{Binding .}" />
+                        </StackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Create New Button -->
+        <Button Text="Create New User"
+                VerticalOptions="EndAndExpand"
+                Command="{Binding NewCommand}" 
+                Grid.Row="2" />
+    </Grid>
+
+</ContentPage>

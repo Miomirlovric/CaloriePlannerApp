@@ -1,15 +1,19 @@
-﻿namespace CaloriePlannerApp
+﻿using CaloriePlannerApp.Data.ViewModels;
+
+namespace CaloriePlannerApp
 {
     public partial class App : Application
     {
-        public App()
+        private ShellVM ShellVM;
+        public App(ShellVM shellVM)
         {
             InitializeComponent();
+            ShellVM = shellVM;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            return new Window(new AppShell(ShellVM));
         }
     }
 }

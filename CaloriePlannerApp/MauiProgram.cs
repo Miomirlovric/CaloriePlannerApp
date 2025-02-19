@@ -1,6 +1,8 @@
 ﻿using CaloriePlannerApp.Data;
 using CaloriePlannerApp.Data.Helper;
 using CaloriePlannerApp.Data.Model;
+using CaloriePlannerApp.Data.Services;
+using CaloriePlannerApp.Data.ViewModels;
 using CommunityToolkit.Maui;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -31,6 +33,10 @@ public static class MauiProgram
 #endif
 
         builder.Services.AddDbContext<DataContext>();
+        builder.Services.AddSingleton<UserService>();
+        builder.Services.AddTransient<ShellVM>();
+        builder.Services.AddTransient<UserSelectionVM>();
+        builder.Services.AddTransient<FoodInputsVM>();
 
         var app = builder.Build();
 

@@ -23,5 +23,10 @@ namespace CaloriePlannerApp.Data.Entities
         public int CalorieGoal { get; set; }
         public IEnumerable<FoodItem> CustomFoods { get; set; }
         public IEnumerable<FoodUser> ConsumedFoods { get; set; }
+
+        public string UserFullName()
+        {
+            return FirstName + " " + LastName;
+        }
     }
 }
